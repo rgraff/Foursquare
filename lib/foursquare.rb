@@ -2,6 +2,7 @@ require 'rubygems'
 require 'httparty'
 require 'hashie'
 require 'oauth'
+require 'uri'
 
 Hash.send :include, Hashie::HashExtensions
 
@@ -116,7 +117,11 @@ module Foursquare
     end
     
     def to_query_params(options)
-      options.collect { |key, value| "#{key}=#{value}" }.join('&')
+      options.collect { |key, value| "#{key}=#{escape_uri(value)}" }.join('&')
+    end
+    
+    def escape_uri(value) 
+      URI.escape(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     end
     
     def get(url)
