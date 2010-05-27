@@ -24,6 +24,9 @@ describe "foursquare" do
       it "should handle URLs as params" do
         @foursquare.to_query_params(:q => 'http://www.google.com?q=hello%20world').should == 'q=http%3A%2F%2Fwww.google.com%3Fq%3Dhello%2520world'        
       end
+      it "should handle nil values" do
+        @foursquare.to_query_params(:q => nil).should == 'q='
+      end
     end
   end
 end

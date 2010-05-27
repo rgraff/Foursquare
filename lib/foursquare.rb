@@ -123,7 +123,7 @@ module Foursquare
     end
     
     def escape_uri(value) 
-      URI.escape(value, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+      URI.escape(value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
     end
     
     def get(url)
