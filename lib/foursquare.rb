@@ -113,7 +113,9 @@ module Foursquare
     
     def parse_response(response)
       raise_errors(response)
-      Crack::JSON.parse(response.body)
+      result = Crack::JSON.parse(response.body)
+      raise BadRequest, result['error'] if result['error']
+      result
     end
     
     def to_query_params(options)
@@ -220,7 +222,6 @@ module Foursquare
       end
     end
   end
-  
   
   class BadRequest < StandardError; end
   class Unauthorized      < StandardError; end
